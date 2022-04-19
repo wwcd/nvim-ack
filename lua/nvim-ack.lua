@@ -1,7 +1,7 @@
 local M = {}
 
-M.ack = function(...)
-  local cmd = 'rg --vimgrep --no-heading ' .. table.concat({...}, ' ')
+M.ack = function(nargs)
+  local cmd = 'rg --vimgrep --no-heading ' .. table.concat(nargs.fargs, ' ')
   local lines = {}
   local function onevent(_, d, e)
     if e == "stdout" or e == "stderr" then
@@ -32,7 +32,7 @@ M.ack = function(...)
 end
 
 M.setup = function(_)
-  vim.cmd([[command! -nargs=? -range Ack call luaeval('require("nvim-ack").ack(unpack(_A))', [<f-args>])]])
+  vim.api.nvim_create_user_command("Ack", M.ack, {nargs='?', bang=true})
 end
 
 return M
