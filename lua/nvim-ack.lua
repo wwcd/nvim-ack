@@ -31,7 +31,7 @@ M.ack = function(nargs)
 end
 
 M.setup = function(_)
-  vim.api.nvim_create_user_command("Ack", M.ack, {nargs='?', bang=true})
+  vim.api.nvim_create_user_command("Ack", M.ack, {nargs='?', bang=true, range=true})
 end
 
 return M
